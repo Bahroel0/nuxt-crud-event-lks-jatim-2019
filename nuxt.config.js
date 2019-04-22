@@ -80,6 +80,6 @@ export default {
     }
   },
   env: {
-    webServiceUrl: 'http://192.168.1.12:8000'
+    webServiceUrl: 'http://127.0.0.1:8000'
   }
 }

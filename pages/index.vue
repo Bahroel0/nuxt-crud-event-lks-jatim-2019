@@ -89,7 +89,7 @@
                         color="primary"
                         :loading="loading"
                         @click="
-                          editStatus ? editEvent(editEventId) : createEvent
+                          editStatus ? editEvent(editEventId) : createEvent()
                         "
                       >
                         {{ editStatus ? 'Edit' : 'Tambahkan' }}
@@ -107,7 +107,7 @@
           <v-flex v-for="(event, index) in events" :key="index" md3>
             <v-card hover>
               <v-img
-                :src="'http://192.168.1.12:8000/' + event.image_url"
+                :src="'http://127.0.0.1:8000/' + event.image_url"
                 aspect-ratio="1.75"
               />
               <v-card-title primary-title class="pb-0">

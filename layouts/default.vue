@@ -137,7 +137,7 @@
         <template>
           <v-btn slot="activator" icon>
             <v-avatar size="36">
-              <v-img src="/v.png" alt="John" />
+              <v-img src="/person.png" alt="John" />
             </v-avatar>
           </v-btn>
         </template>
@@ -145,7 +145,7 @@
           <v-list>
             <v-list-tile avatar class="mt-3">
               <v-list-tile-avatar size="100">
-                <v-img src="/v.png" alt="John" />
+                <v-img src="/person.png" alt="John" />
               </v-list-tile-avatar>
 
               <v-list-tile-content class="ml-3">

@@ -6,7 +6,7 @@
           <v-flex v-for="(event, index) in events" :key="index" md3>
             <v-card hover>
               <v-img
-                :src="'http://192.168.1.12:8000/' + event.image_url"
+                :src="'http://127.0.0.1:8000/' + event.image_url"
                 aspect-ratio="1.75"
               />
               <v-card-title primary-title class="pb-0">
@@ -32,16 +32,9 @@
               </v-card-text>
               <v-card-text>
                 <span>
-                  {{ event.description }}
+                  {{ event.description.substring(0, 100) + '. . .' }}
                 </span>
               </v-card-text>
-
-              <v-card-actions class="pb-3 pr-3">
-                <v-spacer />
-                <v-btn dark color="primary" :to="'/event/' + event.id" small
-                  >Lihat detail</v-btn
-                >
-              </v-card-actions>
             </v-card>
           </v-flex>
         </v-layout>

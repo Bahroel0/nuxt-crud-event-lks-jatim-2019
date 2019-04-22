@@ -9,7 +9,7 @@
       <v-flex xs12 md10 offset-md1>
         <v-card flat>
           <v-img
-            :src="'http://192.168.1.12:8000/' + event.image_url"
+            :src="'http://127.0.0.1:8000/' + event.image_url"
             aspect-ratio="3.75"
           />
           <v-card-title primary-title class="pb-0">
@@ -51,7 +51,7 @@
               color="primary"
               :disabled="!user"
               @click="registerEvent(event.id)"
-              >Register</v-btn
+              >Join</v-btn
             >
           </v-card-actions>
         </v-card>
@@ -65,13 +65,13 @@
           </v-flex>
           <v-flex xs12 sm12 md12>
             <v-data-table
-              :headers="basic.headers"
-              :items="basic.items"
+              :headers="headers"
+              :items="items"
               hide-actions
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.email }}</td>
+                <td>{{ props.item.users.email }}</td>
                 <td class="text-xs-center">{{ props.item.created_at }}</td>
               </template>
             </v-data-table>
@@ -86,31 +86,19 @@ export default {
   data() {
     return {
       favorite: true,
-      basic: {
-        headers: [
-          {
-            text: 'Email',
-            align: 'left',
-            sortable: false
-          },
-          {
-            text: 'Tanggal terdaftar',
-            value: 'created_at',
-            align: 'center',
-            sortable: false
-          }
-        ],
-        items: [
-          {
-            email: 'Frozen Yogurt',
-            created_at: 159
-          },
-          {
-            email: 'Ice cream sandwich',
-            created_at: 237
-          }
-        ]
-      }
+      headers: [
+        {
+          text: 'Email',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Tanggal terdaftar',
+          value: 'created_at',
+          align: 'center',
+          sortable: false
+        }
+      ]
     }
   },
   computed: {
@@ -153,6 +141,23 @@ export default {
       // eslint-disable-next-line
       const event = events.find(obj => obj.id == this.$route.params.id)
       return event
+    }
+  },
+  asyncData(context) {
+    if (context.store.getters.user == null) {
+      return {
+        items: []
+      }
+    } else {
+      return context.$axios
+        .get(
+          `http://127.0.0.1:8000/event/member/${context.params.id}` +
+            '?api_token=' +
+            context.store.getters.user.api_token
+        )
+        .then(res => {
+          return { items: res.data.data }
+        })
     }
   },
   methods: {
