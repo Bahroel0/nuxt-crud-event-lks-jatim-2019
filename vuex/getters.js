@@ -3,5 +3,6 @@ export default {
   load: state => state.load,
   error: state => state.error,
   events: state => state.events,
-  eventjoin: state => state.eventjoin
+  eventjoin: state => state.eventjoin,
+  searchKey: state => state.searchKey
 }

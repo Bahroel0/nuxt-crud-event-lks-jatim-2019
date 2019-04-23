@@ -10,7 +10,8 @@ const state = () => ({
   },
   user: null,
   events: null,
-  eventjoin: null
+  eventjoin: null,
+  searchKey: null
 })
 
 export default {

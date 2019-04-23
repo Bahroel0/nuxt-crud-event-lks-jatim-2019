@@ -38,6 +38,7 @@
       </v-btn>
       <v-toolbar-title class="mr-3">Tech Event</v-toolbar-title>
       <v-text-field
+        v-model="searchKey"
         solo
         light
         label="Cari event"
@@ -45,83 +46,11 @@
         clearable
         class="ml-5 mt-2 hidden-xs-only"
         style="border-radius: 100%"
+        @input="onSearch()"
+        @click:clear="onClearSearch()"
       />
       <v-spacer />
       <v-spacer />
-      <v-dialog
-        v-model="searchMobile"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        class="hidden-sm-and-up"
-      >
-        <template>
-          <v-btn slot="activator" icon>
-            <v-icon>search</v-icon>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-toolbar light flat>
-            <v-btn icon @click="searchMobile = false">
-              <v-icon>keyboard_backspace</v-icon>
-            </v-btn>
-            <v-text-field solo placeholder="Cari" clearable class="mt-2" flat />
-          </v-toolbar>
-          <v-container grid-list-md>
-            <v-layout row wrap>
-              <v-flex v-for="(item, index) in 2" :key="index" xs12>
-                <v-card :to="'/event/' + index" hover>
-                  <v-img
-                    src="https://storage.googleapis.com/io-19-assets/images/homepage/intro.jpg"
-                    aspect-ratio="1.75"
-                  />
-                  <v-card-title primary-title class="pb-0">
-                    <span class="title">Google I/O 2019</span>
-                  </v-card-title>
-                  <v-card-text class="pb-0">
-                    <v-layout row wrap>
-                      <v-flex xs1>
-                        <v-icon size="23">place</v-icon>
-                      </v-flex>
-                      <v-flex xs5>
-                        <span>Las Vegas, Amerika</span>
-                      </v-flex>
-                      <v-flex xs1>
-                        <v-icon size="23">access_time</v-icon>
-                      </v-flex>
-                      <v-flex xs5>
-                        <span>12 Mei 2019</span>
-                      </v-flex>
-                    </v-layout>
-                  </v-card-text>
-                  <v-card-text>
-                    <span>
-                      This year’s developer festival will be held May 7-9 at the
-                      Shoreline Amphitheatre in Mountain View, CA. . .
-                    </span>
-                  </v-card-text>
-
-                  <v-card-actions v-if="admin">
-                    <v-btn flat icon color="pink">
-                      <v-icon>favorite</v-icon>
-                    </v-btn>
-                    <v-btn flat icon color="pink">
-                      <v-icon>favorite</v-icon>
-                    </v-btn>
-                    <v-btn flat icon color="pink">
-                      <v-icon>favorite</v-icon>
-                    </v-btn>
-                  </v-card-actions>
-                  <v-card-actions v-else class="pb-3 pr-3">
-                    <v-spacer />
-                    <v-btn dark color="primary">Register</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card>
-      </v-dialog>
       <v-btn v-if="!user" dark flat to="/login">Login</v-btn>
       <v-btn v-if="!user" dark flat to="/register">Daftar</v-btn>
       <v-menu
@@ -176,7 +105,8 @@ export default {
       ],
       menu: false,
       search: null,
-      searchMobile: false
+      searchMobile: false,
+      searchKey: null
     }
   },
   computed: {
@@ -195,6 +125,13 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout').then(location.reload())
+    },
+    onSearch() {
+      const key = this.searchKey
+      this.$store.dispatch('search', key)
+    },
+    onClearSearch() {
+      this.$store.dispatch('clearSearch')
     }
   }
 }

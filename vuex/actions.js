@@ -224,5 +224,12 @@ export default {
         // eslint-disable-next-line
       console.log(error)
       })
+  },
+  // search
+  search({ commit }, key) {
+    commit(types.SET_SEARCH_KEY_STATE, key)
+  },
+  clearSearch({ commit }) {
+    commit(types.DELETE_SEARCH_KEY_STATE)
   }
 }

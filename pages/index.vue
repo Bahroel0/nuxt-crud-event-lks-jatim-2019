@@ -104,7 +104,11 @@
       </v-flex>
       <v-flex md12 class="mt-3">
         <v-layout row wrap>
-          <v-flex v-for="(event, index) in events" :key="index" md3>
+          <v-flex
+            v-for="(event, index) in searchKey ? eventSearch : events"
+            :key="index"
+            md3
+          >
             <v-card hover>
               <v-img
                 :src="'http://127.0.0.1:8000/' + event.image_url"
@@ -220,6 +224,9 @@ export default {
     }
   },
   computed: {
+    searchKey() {
+      return this.$store.getters.searchKey !== null
+    },
     error() {
       return this.$store.getters.error
     },
@@ -236,6 +243,29 @@ export default {
     },
     events() {
       return this.$store.getters.events
+    },
+    eventSearch() {
+      const key = this.$store.getters.searchKey.toLowerCase()
+      // const array = []
+      const events = this.$store.getters.events
+
+      // for (let i = 0; i < events.length; i++) {
+      //   if (events[i].match(new RegExp(key))) {
+      //     array.push(events[i])
+      //   }
+      // }
+      // return array
+      return events.filter(event => event.name.toLowerCase().includes(key))
+
+      // return [
+      //   {
+      //     name: 'name',
+      //     address: 'bla blA',
+      //     date: 'sdasda',
+      //     description: 'adssda',
+      //     image_url: ''
+      //   }
+      // ]
     }
   },
   methods: {

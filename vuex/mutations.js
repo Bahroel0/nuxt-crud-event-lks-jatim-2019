@@ -46,5 +46,11 @@ export default {
         state.eventjoin.splice(i, 1)
       }
     }
+  },
+  [types.SET_SEARCH_KEY_STATE]: (state, payload) => {
+    state.searchKey = payload
+  },
+  [types.DELETE_SEARCH_KEY_STATE]: state => {
+    state.searchKey = null
   }
 }
